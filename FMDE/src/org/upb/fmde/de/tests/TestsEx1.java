@@ -71,7 +71,7 @@ public class TestsEx1 {
 	private FinSetDiagram createDiagram1() {
 		FinSet X = new FinSet("X", "a", "b", "c");
 		FinSet Y = new FinSet("Y", 1, 2, "blup");
-		FinSet Z = new FinSet("Z", 'a', 3, "foo");
+		FinSet Z = new FinSet("Z", "a", 3, "foo");
 		
 		TotalFunction g = new TotalFunction(X, "g", Y)
 				.addMapping(X.get("a"), Y.get("1"))
@@ -97,7 +97,7 @@ public class TestsEx1 {
 	private FinSetDiagram createDiagram2() {
 		FinSet Z = new FinSet("Z", "a", "b", "c");
 		FinSet Y = new FinSet("Y", 1, 2, "blup");
-		FinSet X = new FinSet("X", 'a', 3, "foo");
+		FinSet X = new FinSet("X", "a", 3, "foo");
 		
 		TotalFunction g = new TotalFunction(Y, "g", X)
 				.addMapping(Y.get("1"), X.get("a"))
