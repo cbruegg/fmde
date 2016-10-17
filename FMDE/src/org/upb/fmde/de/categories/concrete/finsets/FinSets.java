@@ -8,13 +8,19 @@ public class FinSets implements LabelledCategory<FinSet, TotalFunction> {
 
 	@Override
 	public TotalFunction compose(TotalFunction f, TotalFunction g) {
-		// TODO (3) Compose arrows via function composition
-		throw new UnsupportedOperationException("This method has not been implemented yet!");
+		TotalFunction h = new TotalFunction(f.src(), f.label() + ";" + g.label(), g.trg());
+		for (Object fElem : f.src().elts()) {
+			h.addMapping(fElem, g.map(f.map(fElem)));
+		}
+		return h;
 	}
 
 	@Override
 	public TotalFunction id(FinSet a) {
-		// TODO (2) Create and return the id function: a -> a
-		throw new UnsupportedOperationException("This method has not been implemented yet!");
+		TotalFunction id = new TotalFunction(a, "id", a);
+		for (Object o : a.elts()) {
+			id.addMapping(o, o);
+		}
+		return id;
 	}
 }

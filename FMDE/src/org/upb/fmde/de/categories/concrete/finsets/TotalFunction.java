@@ -26,10 +26,24 @@ public class TotalFunction extends LabelledArrow<FinSet> implements ComparableAr
 	}
 
 	public boolean isTheSameAs(TotalFunction f) {
-		// TODO (1) Determine if this and f are equivalent total functions
-		throw new UnsupportedOperationException("This method has not been implemented yet!");
+		return f.equals(this);
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		TotalFunction that = (TotalFunction) o;
+
+		return elementMappings != null ? elementMappings.equals(that.elementMappings) : that.elementMappings == null;
+	}
+
+	@Override
+	public int hashCode() {
+		return elementMappings != null ? elementMappings.hashCode() : 0;
+	}
+
 	public Map<Object, Object> mappings(){
 		return elementMappings;
 	}
