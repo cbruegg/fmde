@@ -2,3 +2,5 @@
 /xtend-gen/
 .idea
 *.iml
+diagrams
+FMDE.jar
