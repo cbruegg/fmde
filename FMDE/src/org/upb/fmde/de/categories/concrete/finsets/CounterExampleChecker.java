@@ -4,25 +4,31 @@ import org.upb.fmde.de.categories.diagrams.Diagram;
 
 public class CounterExampleChecker {
 	public static boolean isCounterExampleForMono(Diagram<FinSet, TotalFunction> d){
-		// TODO (4) Implement check for mono counter example
 		// Given: X -g-> Y -f-> Z
 		//        X -h-> Y -f-> Z
 		// Check: (g;f = h;f) ^ (g != h)
 		TotalFunction g = d.getArrow("g");
 		TotalFunction f = d.getArrow("f");
 		TotalFunction h = d.getArrow("h");
-		throw new UnsupportedOperationException("This method has not been implemented yet!");
+
+		TotalFunction gf = FinSets.FinSets.compose(g, f);
+		TotalFunction hf = FinSets.FinSets.compose(h, f);
+
+		return gf.isTheSameAs(hf) && !g.isTheSameAs(h);
 	}
 	
 	public static boolean isCounterExampleForEpi(Diagram<FinSet, TotalFunction> d){
-		// TODO (5) Implement check for epi counter example
 		// Given: Z -f-> Y -g-> X
 		//        Z -f-> Y -h-> X
 		// Check: (f;g = f;h) ^ (g != h)
 		TotalFunction g = d.getArrow("g");
 		TotalFunction f = d.getArrow("f");
 		TotalFunction h = d.getArrow("h");
-		throw new UnsupportedOperationException("This method has not been implemented yet!");
+
+		TotalFunction fg = FinSets.FinSets.compose(f, g);
+		TotalFunction fh = FinSets.FinSets.compose(f, h);
+
+		return fg.isTheSameAs(fh) && !g.isTheSameAs(h);
 	}
 
 }
