@@ -10,7 +10,11 @@ public class FinSets implements LabelledCategory<FinSet, TotalFunction> {
 	public TotalFunction compose(TotalFunction f, TotalFunction g) {
 		TotalFunction h = new TotalFunction(f.src(), f.label() + ";" + g.label(), g.trg());
 		for (Object fElem : f.src().elts()) {
-			h.addMapping(fElem, g.map(f.map(fElem)));
+			Object mappedValue = g.map(f.map(fElem));
+			if (mappedValue == null) {
+				throw new IllegalArgumentException("The functions can not be composed");
+			}
+			h.addMapping(fElem, mappedValue);
 		}
 		return h;
 	}

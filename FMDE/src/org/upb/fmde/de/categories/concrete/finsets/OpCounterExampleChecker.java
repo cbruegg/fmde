@@ -1,8 +1,8 @@
 package org.upb.fmde.de.categories.concrete.finsets;
 
-import static org.upb.fmde.de.categories.concrete.finsets.FinSets.FinSets;
-
 import org.upb.fmde.de.categories.diagrams.Diagram;
+
+import static org.upb.fmde.de.categories.concrete.finsets.FinSets.FinSets;
 
 public class OpCounterExampleChecker {
 
@@ -10,13 +10,13 @@ public class OpCounterExampleChecker {
         Diagram<FinSet, TotalFunction> op_d = new Diagram<>(FinSets);
         op_d.arrows(d.getArrows());
         op_d.objects(d.getObjects());
-        return CounterExampleChecker.isCounterExampleForMono(d);
+        return CounterExampleChecker.isCounterExampleForEpi(op_d); // Exploit duality
     }
 
     public static boolean isCounterExampleForEpi(Diagram<FinSet, TotalFunction> d) {
         Diagram<FinSet, TotalFunction> op_d = new Diagram<>(FinSets);
         op_d.arrows(d.getArrows());
         op_d.objects(d.getObjects());
-        return CounterExampleChecker.isCounterExampleForEpi(d);
+        return CounterExampleChecker.isCounterExampleForMono(op_d);  // Exploit duality
     }
 }
