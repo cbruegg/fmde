@@ -1,6 +1,7 @@
 package org.upb.fmde.de.categories.concrete.tgraphs;
 
 import org.upb.fmde.de.categories.Labelled;
+import org.upb.fmde.de.categories.concrete.graphs.Graph;
 import org.upb.fmde.de.categories.concrete.graphs.GraphMorphism;
 
 public class TGraph extends Labelled {
@@ -14,5 +15,9 @@ public class TGraph extends Labelled {
 	
 	public GraphMorphism type(){
 		return type;
+	}
+
+	public Graph untyped() {
+		return type.src();
 	}
 }
