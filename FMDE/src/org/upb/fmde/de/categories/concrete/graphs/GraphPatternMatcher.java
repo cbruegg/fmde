@@ -1,12 +1,13 @@
 package org.upb.fmde.de.categories.concrete.graphs;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.BiPredicate;
-
 import org.upb.fmde.de.categories.PatternMatcher;
 import org.upb.fmde.de.categories.concrete.finsets.FinSetPatternMatcher;
 import org.upb.fmde.de.categories.concrete.finsets.TotalFunction;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiPredicate;
 
 public class GraphPatternMatcher extends PatternMatcher<Graph, GraphMorphism> {
 
@@ -26,12 +27,8 @@ public class GraphPatternMatcher extends PatternMatcher<Graph, GraphMorphism> {
 		for (TotalFunction m_E : pm_E.determineMatches(mono, edgeFilter)) {
 			FinSetPatternMatcher pm_V = new FinSetPatternMatcher(pattern.vertices(), host.vertices());
 			for (TotalFunction m_V : pm_V.determineMatches(mono, determinePartialMatch(m_E), nodeFilter)) {
-				try {
-					GraphMorphism m = new GraphMorphism("m", pattern, host, m_E, m_V);
-					matches.add(m);
-				} catch (Exception e) {
-
-				}
+                GraphMorphism m = new GraphMorphism("m", pattern, host, m_E, m_V);
+                matches.add(m);
 			}
 		}
 
@@ -41,7 +38,17 @@ public class GraphPatternMatcher extends PatternMatcher<Graph, GraphMorphism> {
 	private TotalFunction determinePartialMatch(TotalFunction m_E) {
 		TotalFunction m_V = new TotalFunction(pattern.vertices(), "m_V", host.vertices());
 		
-		// TODO (05) Determine partial match to speed up pattern matching process
+		// (05) Determine partial match to speed up pattern matching process
+        for (Map.Entry<Object, Object> kvp : m_E.mappings().entrySet())
+        {
+            Object srcInPattern = pattern.src().map(kvp.getKey());
+            Object srcInHost = host.src().map(kvp.getValue());
+            m_V.addMapping(srcInPattern, srcInHost);
+
+            Object trgInPattern = pattern.trg().map(kvp.getKey());
+            Object trgInHost = host.trg().map(kvp.getValue());
+            m_V.addMapping(trgInPattern, trgInHost);
+        }
 		
 		return m_V;
 	}
