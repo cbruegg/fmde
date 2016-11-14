@@ -1,10 +1,10 @@
 package org.upb.fmde.de.categories.concrete.finsets;
 
+import org.upb.fmde.de.categories.PatternMatcher;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiPredicate;
-
-import org.upb.fmde.de.categories.PatternMatcher;
 
 public class FinSetPatternMatcher extends PatternMatcher<FinSet, TotalFunction> {
 	
@@ -60,22 +60,22 @@ public class FinSetPatternMatcher extends PatternMatcher<FinSet, TotalFunction> 
 	}
 
 	private boolean searchIsComplete(int index) {
-		// TODO (01) Specify condition indicating that all variables have been matched
-		throw new UnsupportedOperationException("Not yet implemented");
+		// (01) Specify condition indicating that all variables have been matched
+		return index == pattern.elts().size();
 	}
 	
 	private boolean partialMatchIsComplete(TotalFunction match) {
-		// TODO (02) Specify condition indicating that the match contains a match for every variable
-		throw new UnsupportedOperationException("Not yet implemented");
+		// (02) Specify condition indicating that the match contains a match for every variable
+        return match.mappings().size() == pattern.elts().size();
 	}
 	
 	private boolean notYetMatched(TotalFunction match, Object currentVariable) {
-		// TODO (03) Specify condition indicating that currentVariable is not yet mapped to anything
-		throw new UnsupportedOperationException("Not yet implemented");
+		// (03) Specify condition indicating that currentVariable is not yet mapped to anything
+        return !match.mappings().containsKey(currentVariable);
 	}
 
 	private boolean notInImageOfMatch(TotalFunction match, Object o) {
-		// TODO (04) Specify condition indicating that match does not map any variable to o
-		throw new UnsupportedOperationException("Not yet implemented");
+		// (04) Specify condition indicating that match does not map any variable to o
+        return !match.mappings().containsValue(o);
 	}
 }
