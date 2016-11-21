@@ -1,10 +1,10 @@
 package org.upb.fmde.de.graphconditions;
 
+import org.upb.fmde.de.categories.PatternMatcher;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.BiFunction;
-
-import org.upb.fmde.de.categories.PatternMatcher;
 
 public class And<Ob, Arr> implements ComplexGraphCondition<Ob, Arr> {
 
@@ -21,7 +21,12 @@ public class And<Ob, Arr> implements ComplexGraphCondition<Ob, Arr> {
 	
 	@Override
 	public boolean isSatisfiedByArrow(Arr m, BiFunction<Ob, Ob, PatternMatcher<Ob, Arr>> creator) {
-		// TODO (16) Implement Def 13
-	    throw new UnsupportedOperationException("Not implemented yet");
+		// (16) Implement Def 13
+		for (ComplexGraphCondition<Ob, Arr> condition : innerConditions) {
+			if (!condition.isSatisfiedByArrow(m, creator))
+				return false;
+		}
+
+		return true;
 	}
 }

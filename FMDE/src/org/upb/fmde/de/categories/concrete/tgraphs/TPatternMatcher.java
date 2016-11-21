@@ -34,7 +34,7 @@ public class TPatternMatcher extends PatternMatcher<TGraph, TGraphMorphism>{
 		return (from, to) -> {
 			// (06) Filter out wrong nodes to speed up pattern matching process
             Object fromType = pattern.type()._V().map(from);
-            Object toType = pattern.type()._V().map(to);
+            Object toType = host.type()._V().map(to);
 			return fromType.equals(toType);
 		};
 	}
@@ -43,7 +43,7 @@ public class TPatternMatcher extends PatternMatcher<TGraph, TGraphMorphism>{
 		return (from, to) -> {
 			// (07) Filter out wrong edges to speed up pattern matching process
             Object fromType = pattern.type()._E().map(from);
-            Object toType = pattern.type()._E().map(to);
+            Object toType = host.type()._E().map(to);
             return fromType.equals(toType);
 		};
 	}
