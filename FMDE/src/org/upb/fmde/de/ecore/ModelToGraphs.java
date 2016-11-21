@@ -1,13 +1,13 @@
 package org.upb.fmde.de.ecore;
 
-import java.util.Collection;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.moflon.core.utilities.eMoflonEMFUtil;
 import org.upb.fmde.de.categories.concrete.finsets.FinSet;
 import org.upb.fmde.de.categories.concrete.finsets.TotalFunction;
 import org.upb.fmde.de.categories.concrete.graphs.Graph;
+
+import java.util.Collection;
 
 public class ModelToGraphs {
 	private Graph result;
@@ -28,7 +28,7 @@ public class ModelToGraphs {
 
 	private void traverseModel(EObject root) {
 		visitNodeAndEdges(root);
-		root.eAllContents().forEachRemaining(eob -> visitNodeAndEdges(eob));
+		root.eAllContents().forEachRemaining(this::visitNodeAndEdges);
 	}
 
 	private void visitNodeAndEdges(EObject eob) {

@@ -2,13 +2,11 @@ package org.upb.fmde.de.ecore;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.upb.fmde.de.categories.concrete.finsets.TotalFunction;
 import org.upb.fmde.de.categories.concrete.graphs.Graph;
 import org.upb.fmde.de.categories.concrete.graphs.GraphMorphism;
 import org.upb.fmde.de.categories.concrete.tgraphs.TGraph;
-import org.upb.fmde.de.ecore.ModelToGraphs.EcoreEdge;
 
 public class ModelToTGraphs {
 	private TGraph model;
@@ -58,8 +56,29 @@ public class ModelToTGraphs {
 	}
 
 	private TGraph determineTypeForModel(Graph m, Graph mm) {
-		// TODO (08) Create and return m -type-> mm
-		throw new UnsupportedOperationException("Not implemented yet");
+		// (08) Create and return m -type-> mm
+        TotalFunction f_E = new TotalFunction(m.edges(), "type_E_" + m.label(), mm.edges());
+        TotalFunction f_V = new TotalFunction(m.vertices(), "type_V_" + m.label(), mm.vertices());
+
+        for (Object node : m.vertices().elts()) {
+            EClass tv = ((EObject) node).eClass();
+
+            mm.vertices().elts()
+                .stream()
+                .filter(mv -> mv.equals(tv))
+                .forEach(o -> f_V.addMapping(node, o));
+        }
+
+        for (Object e : m.edges().elts()) {
+            ModelToGraphs.EcoreEdge edge = (ModelToGraphs.EcoreEdge)e;
+            mm.edges().elts()
+                .stream()
+                .filter(me -> me.equals(edge.sf))
+                .forEach(e2 -> f_E.addMapping(edge, e2));
+        }
+
+        GraphMorphism type = new GraphMorphism("type_" + m.label(), m, mm, f_E, f_V);
+        return new TGraph(m.label(), type);
 	}
 
 	public TGraph[] getResult() {
