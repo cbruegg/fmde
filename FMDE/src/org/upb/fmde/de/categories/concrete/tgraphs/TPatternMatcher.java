@@ -1,12 +1,12 @@
 package org.upb.fmde.de.categories.concrete.tgraphs;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.BiPredicate;
-
 import org.upb.fmde.de.categories.PatternMatcher;
 import org.upb.fmde.de.categories.concrete.graphs.GraphMorphism;
 import org.upb.fmde.de.categories.concrete.graphs.GraphPatternMatcher;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiPredicate;
 
 public class TPatternMatcher extends PatternMatcher<TGraph, TGraphMorphism>{
 	
@@ -32,15 +32,19 @@ public class TPatternMatcher extends PatternMatcher<TGraph, TGraphMorphism>{
 
 	private BiPredicate<Object, Object> createNodeTypeFilter() {
 		return (from, to) -> {
-			// TODO (06) Filter out wrong nodes to speed up pattern matching process
-			return true;
+			// (06) Filter out wrong nodes to speed up pattern matching process
+            Object fromType = pattern.type()._V().map(from);
+            Object toType = pattern.type()._V().map(to);
+			return fromType.equals(toType);
 		};
 	}
 
 	private BiPredicate<Object, Object> createEdgeTypeFilter() {
 		return (from, to) -> {
-			// TODO (07) Filter out wrong edges to speed up pattern matching process
-			return true;
+			// (07) Filter out wrong edges to speed up pattern matching process
+            Object fromType = pattern.type()._E().map(from);
+            Object toType = pattern.type()._E().map(to);
+            return fromType.equals(toType);
 		};
 	}
 }
