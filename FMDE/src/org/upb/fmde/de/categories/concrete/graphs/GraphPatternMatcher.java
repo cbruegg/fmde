@@ -49,7 +49,7 @@ public class GraphPatternMatcher extends PatternMatcher<Graph, GraphMorphism> {
             Object trgInHost = host.trg().map(kvp.getValue());
             m_V.addMapping(trgInPattern, trgInHost);
         }
-		
+
 		return m_V;
 	}
 

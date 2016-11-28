@@ -25,7 +25,8 @@ public class FinSets implements LabelledCategory<FinSet, TotalFunction>,
 
 	@Override
 	public CoLimit<FinSet, TotalFunction> initialObject() {
-		// TODO (10) Implement Def 8 for FinSets
-		throw new UnsupportedOperationException("Not implemented yet");
+		//10: Implement Def 8 for FinSets
+		FinSet set =new FinSet("emptySet");
+		return new CoLimit<>(set,finSet -> new TotalFunction(set,"",finSet));
 	}
 }
