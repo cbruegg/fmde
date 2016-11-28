@@ -1,12 +1,12 @@
 package org.upb.fmde.de.categories.concrete.graphs;
 
-import static org.upb.fmde.de.categories.concrete.finsets.FinSets.FinSets;
-
 import org.upb.fmde.de.categories.LabelledCategory;
 import org.upb.fmde.de.categories.colimits.CategoryWithInitOb;
 import org.upb.fmde.de.categories.colimits.CoLimit;
 import org.upb.fmde.de.categories.concrete.finsets.FinSet;
 import org.upb.fmde.de.categories.concrete.finsets.TotalFunction;
+
+import static org.upb.fmde.de.categories.concrete.finsets.FinSets.FinSets;
 
 public class Graphs implements LabelledCategory<Graph, GraphMorphism>, 
 							   CategoryWithInitOb<Graph, GraphMorphism> {
@@ -31,7 +31,16 @@ public class Graphs implements LabelledCategory<Graph, GraphMorphism>,
 
 	@Override
 	public CoLimit<Graph, GraphMorphism> initialObject() {
-		// TODO (11) Implement Def 8 for Graphs
-		throw new UnsupportedOperationException("Not implemented yet");
+		// (11) Implement Def 8 for Graphs
+        CoLimit<FinSet, TotalFunction> finsetsCoLimit = FinSets.initialObject();
+
+		Graph initialObject = new Graph("Initial Object", finsetsCoLimit.obj, finsetsCoLimit.obj,
+            finsetsCoLimit.up.apply(finsetsCoLimit.obj), // this creates an empty TotalFunction
+            finsetsCoLimit.up.apply(finsetsCoLimit.obj));
+
+		return new CoLimit<>(initialObject, targetGraph -> new GraphMorphism("",
+            initialObject, targetGraph,
+            new TotalFunction(initialObject.edges(), "", targetGraph.edges()),
+            new TotalFunction(initialObject.vertices(), "", targetGraph.vertices())));
 	}
 }

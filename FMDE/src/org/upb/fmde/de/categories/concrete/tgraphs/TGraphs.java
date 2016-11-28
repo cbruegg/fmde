@@ -1,12 +1,12 @@
 package org.upb.fmde.de.categories.concrete.tgraphs;
 
-import static org.upb.fmde.de.categories.concrete.graphs.Graphs.Graphs;
-
 import org.upb.fmde.de.categories.LabelledCategory;
 import org.upb.fmde.de.categories.colimits.CategoryWithInitOb;
 import org.upb.fmde.de.categories.colimits.CoLimit;
 import org.upb.fmde.de.categories.concrete.graphs.Graph;
 import org.upb.fmde.de.categories.concrete.graphs.GraphMorphism;
+
+import static org.upb.fmde.de.categories.concrete.graphs.Graphs.Graphs;
 
 public class TGraphs implements LabelledCategory<TGraph, TGraphMorphism>, 
 								CategoryWithInitOb<TGraph, TGraphMorphism> {
@@ -39,7 +39,13 @@ public class TGraphs implements LabelledCategory<TGraph, TGraphMorphism>,
 
 	@Override
 	public CoLimit<TGraph, TGraphMorphism> initialObject() {
-		// TODO (12) Implement Def 8 for TGraphs
-		throw new UnsupportedOperationException("Not implemented yet");
+		// (12) Implement Def 8 for TGraphs
+		CoLimit<Graph, GraphMorphism> graphsCoLimit = Graphs.initialObject();
+
+		TGraph initialObject = new TGraph("Initial Object", graphsCoLimit.up.apply(graphsCoLimit.obj));
+
+		return new CoLimit<>(initialObject, targetGraph -> new TGraphMorphism("",
+            graphsCoLimit.up.apply(targetGraph.type().src()),
+            initialObject, targetGraph));
 	}
 }

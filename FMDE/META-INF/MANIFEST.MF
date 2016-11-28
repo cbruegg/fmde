@@ -18,4 +18,5 @@ Require-Bundle: org.eclipse.emf.ecore.xmi;bundle-version="2.12.0",
  org.junit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.emf.ecore,
- org.moflon.core.utilities
+ org.moflon.core.utilities,
+ org.eclipse.emf.common
